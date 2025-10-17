@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SDMO — Activos</title>
+
+  <!-- Estilos y libs -->
+  <link rel="stylesheet" href="../public/app.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="../public/config.js"></script>
+
+  <!-- Guard de sesión: si no hay sesión, vuelve al login -->
+  <script>
+    const cfg0 = window.SDMO_CONFIG || {};
+    const sb0 = window.supabase.createClient(cfg0.SUPABASE_URL, cfg0.SUPABASE_ANON_KEY);
+    (async () => {
+      const { data } = await sb0.auth.getSession();
+      if (!data.session) window.location.href = "../index.html";
+    })();
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="flex items-center justify-between mb-3">
+      <h1 class="text-2xl font-bold">Activos</h1>
+      <a class="btn" href="../home.html">← Volver</a>
+    </div>
+
+    <!-- Filtros -->
+    <div class="card mb-3">
+      <div class="grid" style="grid-template-columns: 1fr 220px auto;">
+        <input id="qNombre" type="search" placeholder="Buscar por nombre…" />
+        <input id="qCodigo" type="search" placeholder="Filtrar por código…" />
+        <button id="limpiar" class="btn" type="button">Limpiar</button>
+      </div>
+      <p class="text-sm text-gray-600 mt-2">Búsqueda por nombre y/o código. Paginación automática.</p>
+    </div>
+
+    <!-- Tabla -->
+    <div class="card">
+      <div id="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width:160px">Código</th>
+              <th>Nombre</th>
+              <th style="width:120px">Stock</th>
+              <th style="width:140px">Imagen</th>
+            </tr>
+          </thead>
+          <tbody id="rows">
+            <tr><td colspan="4"><div class="skeleton" style="height:32px;border-radius:8px"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex items-center justify-between mt-3">
+        <div class="text-sm text-gray-600" id="info">Cargando…</div>
+        <div class="flex gap-2">
+          <button id="prev" class="btn" type="button" disabled>« Anterior</button>
+          <button id="next" class="btn" type="button" disabled>Siguiente »</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === Ajusta aquí el nombre de tu vista/tabla ===
+    const TABLE_NAME = "inventario_actual";   // cambia si tu vista se llama distinto
+    const PAGE_SIZE  = 20;
+
+    // Cliente
+    const cfg = window.SDMO_CONFIG || {};
+    const supabase = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+
+    // Estado
+    let page = 1;
+    let qNombre = "";
+    let qCodigo = "";
+
+    // Elementos
+    const el = {
+      qNombre: document.getElementById("qNombre"),
+      qCodigo: document.getElementById("qCodigo"),
+      limpiar: document.getElementById("limpiar"),
+      rows: document.getElementById("rows"),
+      info: document.getElementById("info"),
+      prev: document.getElementById("prev"),
+      next: document.getElementById("next"),
+    };
+
+    // Utilidad: debounce
+    function debounce(fn, ms = 450) {
+      let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+    }
+
+    async function load() {
+      el.info.textContent = "Cargando…";
+      el.prev.disabled = true; el.next.disabled = true;
+
+      const from = (page - 1) * PAGE_SIZE;
+      const to   = page * PAGE_SIZE - 1;
+
+      let q = supabase.from(TABLE_NAME)
+        .select("codigo_articulo,nombre,stock,imagen_url", { count: "exact" })
+        .range(from, to);
+
+      if (qNombre) q = q.ilike("nombre", `%${qNombre}%`);
+      if (qCodigo) q = q.ilike("codigo_articulo", `%${qCodigo}%`);
+
+      const { data, count, error } = await q;
+
+      if (error) {
+        el.rows.innerHTML = `<tr><td colspan="4">Error: ${error.message}</td></tr>`;
+        el.info.textContent = "Ocurrió un error al cargar.";
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        el.rows.innerHTML = `<tr><td colspan="4">Sin datos</td></tr>`;
+      } else {
+        el.rows.innerHTML = data.map(r => `
+          <tr>
+            <td>${r.codigo_articulo ?? ""}</td>
+            <td>${r.nombre ?? ""}</td>
+            <td>${r.stock ?? ""}</td>
+            <td>${r.imagen_url ? `<img src="${r.imagen_url}" style="height:48px;border-radius:8px">` : ""}</td>
+          </tr>
+        `).join("");
+      }
+
+      const total = count ?? 0;
+      const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+      el.info.textContent = `Página ${page} de ${pages} — ${total} registros`;
+      el.prev.disabled = page <= 1;
+      el.next.disabled = page >= pages;
+    }
+
+    // Eventos
+    el.prev.addEventListener("click", () => { page--; load(); });
+    el.next.addEventListener("click", () => { page++; load(); });
+    el.qNombre.addEventListener("input", debounce(() => { qNombre = el.qNombre.value.trim(); page = 1; load(); }));
+    el.qCodigo.addEventListener("input", debounce(() => { qCodigo = el.qCodigo.value.trim(); page = 1; load(); }));
+    el.limpiar.addEventListener("click", () => {
+      el.qNombre.value = ""; el.qCodigo.value = ""; qNombre = ""; qCodigo = ""; page = 1; load();
+    });
+
+    // Inicial
+    load();
+  </script>
+</body>
+</html>
