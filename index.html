@@ -10,21 +10,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <title>Acceso Seguro - SDMO</title>
+
+  <link rel="stylesheet" href="public/app.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="public/config.js"></script>
+
+
   
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    // Configuración Supabase con variables de entorno simuladas
-    const CONFIG = {
-      supabaseUrl: 'https://qpccqoeronbcdyejfjod.supabase.co',
-      supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwY2Nxb2Vyb25iY2R5ZWpmam9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMzA5MzIsImV4cCI6MjA1OTgwNjkzMn0.v_KA6VdHl-F3sRiVaFMsfDQCS1qKERFBk5mTBcSiIDQ',
-      redirectUrl: 'inicio.html',
-      maxAttempts: 5,
-      lockoutTime: 15 * 60 * 1000, // 15 minutos
-      sessionTimeout: 60 * 60 * 1000 // 1 hora
-    };
+  // Lee la config centralizada (public/config.js)
+  const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.SDMO_CONFIG || {};
 
-    const supabase = createClient(CONFIG.supabaseUrl, CONFIG.supabaseKey);
+  const CONFIG = {
+    supabaseUrl: SUPABASE_URL,
+    supabaseKey: SUPABASE_ANON_KEY,
+    redirectUrl: 'inicio.html',        // cambia si quieres otro destino
+    maxAttempts: 5,
+    lockoutTime: 15 * 60 * 1000,       // 15 min
+    sessionTimeout: 60 * 60 * 1000     // 1 hora
+  };
+
+  if (!CONFIG.supabaseUrl || !CONFIG.supabaseKey) {
+    alert('Falta configurar public/config.js con SUPABASE_URL y SUPABASE_ANON_KEY');
+  }
+
+  const supabase = createClient(CONFIG.supabaseUrl, CONFIG.supabaseKey);
+
+  // ⬇️ A PARTIR DE AQUÍ deja TODO tu código tal cual está (SecurityUtils, SessionManager, etc.)
+
+
 
     // Utilidades de seguridad
     const SecurityUtils = {
@@ -1424,3 +1440,4 @@
   </script>
 </body>
 </html>
+
