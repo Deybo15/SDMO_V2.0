@@ -3,18 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SDMO — Panel público</title>
+  <title>SDMO — Panel</title>
   <link rel="stylesheet" href="public/app.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script src="public/config.js"></script>
+
+  <!-- Guard de sesión: si no hay sesión, vuelve al login -->
+  <script>
+    const cfg = window.SDMO_CONFIG || {};
+    const sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+    (async () => {
+      const { data } = await sb.auth.getSession();
+      if (!data.session) window.location.href = 'index.html';
+    })();
+  </script>
 </head>
 <body>
   <div class="container">
-    <h1 class="text-2xl font-bold mb-4">Sistema SDMO — Panel</h1>
+    <div class="flex items-center justify-between mb-3">
+      <h1 class="text-2xl font-bold">Sistema SDMO — Panel</h1>
+      <button id="logout" class="btn">Cerrar sesión</button>
+    </div>
 
     <div class="card">
-      <p class="mb-3">Aquí iremos agregando las vistas mejoradas.</p>
+      <p class="mb-3">Accesos rápidos:</p>
       <div class="flex gap-2 flex-wrap">
         <a class="btn" href="./pages/activos.html">Activos</a>
         <a class="btn" href="./pages/asignacion.html">Asignación</a>
@@ -22,25 +34,19 @@
         <a class="btn" href="./pages/kardex.html">Kárdex</a>
       </div>
     </div>
-
-    <div class="card" style="margin-top:12px">
-      <h2 class="text-xl font-semibold mb-2">Estado de conexión</h2>
-      <p id="status" class="text-sm text-gray-600">Revisando configuración…</p>
-    </div>
   </div>
 
   <script>
-    try {
+    // Cerrar sesión
+    document.getElementById('logout')?.addEventListener('click', async () => {
       const cfg = window.SDMO_CONFIG || {};
-      if (cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY) {
-        window.supabaseClient = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
-        document.getElementById('status').textContent = 'Configuración lista.';
-      } else {
-        document.getElementById('status').textContent = 'Falta configurar public/config.js con tu URL y ANON KEY.';
-      }
-    } catch (e) {
-      document.getElementById('status').textContent = 'Error cargando configuración.'; console.error(e);
-    }
+      const sb = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+      await sb.auth.signOut();
+      sessionStorage.clear();
+      localStorage.removeItem('sdmo_email');
+      localStorage.removeItem('sdmo_remember');
+      window.location.href = 'index.html';
+    });
   </script>
 </body>
 </html>
