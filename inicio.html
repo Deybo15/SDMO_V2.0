@@ -618,10 +618,17 @@
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-    // Configuración Supabase
-    const supabaseUrl = 'https://qpccqoeronbcdyejfjod.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwY2Nxb2Vyb25iY2R5ZWpmam9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyMzA5MzIsImV4cCI6MjA1OTgwNjkzMn0.v_KA6VdHl-F3sRiVaFMsfDQCS1qKERFBk5mTBcSiIDQ';
-    const supabase = createClient(supabaseUrl, supabaseKey);
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.SDMO_CONFIG || {};
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Guard rápido: si no hay sesión, volver al login
+const { data } = await supabase.auth.getSession();
+if (!data.session) {
+  window.location.href = "index.html";
+  throw new Error("No hay sesión");
+}
 
     // Variables globales para control de estado
     let isLoggingOut = false;
@@ -647,7 +654,7 @@
           showNotification("Error al verificar la sesión", "error");
           setTimeout(() => {
             if (!isLoggingOut) {
-              window.location.href = "https://sdmo-sgi.onrender.com/";
+              window.location.href = "index.html";
             }
           }, 2000);
         }
@@ -670,7 +677,7 @@
       }
       
       if (!user && !isLoggingOut) {
-        window.location.href = "https://sdmo-sgi.onrender.com/";
+        window.location.href = "index.html";
         throw new Error("No hay usuario autenticado");
       }
 
@@ -740,14 +747,14 @@
         sessionStorage.clear();
         
         // Forzar la redirección
-        window.location.replace("https://sdmo-sgi.onrender.com/");
+        window.location.replace("index.html");
         
       } catch (error) {
         console.error("Error al cerrar sesión:", error);
         // En caso de error, forzar la redirección de todas formas
         localStorage.clear();
         sessionStorage.clear();
-        window.location.replace("https://sdmo-sgi.onrender.com/");
+        window.location.replace("index.html");
       }
     }
 
@@ -821,7 +828,7 @@
     supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_OUT' && !isLoggingOut) {
         // Solo redirigir si no estamos en proceso de cerrar sesión
-        window.location.href = "https://sdmo-sgi.onrender.com/";
+        window.location.href = "index.html";
       }
     });
 
@@ -840,7 +847,7 @@
           } catch (error) {
             console.error("Error en verificación de visibilidad:", error);
             if (!isLoggingOut) {
-              window.location.href = "https://sdmo-sgi.onrender.com/";
+              window.location.href = "index.html";
             }
           }
         }
@@ -854,3 +861,4 @@
   </script>
 </body>
 </html>
+
