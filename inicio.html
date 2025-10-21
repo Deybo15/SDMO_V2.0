@@ -1,499 +1,146 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sección Desarrollo y Mantenimiento de Obras - Página Principal">
-  <meta name="theme-color" content="#0f1419">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sección Desarrollo y Mantenimiento de Obras - Página Principal" />
+  <meta name="theme-color" content="#0f1419" />
   <title>Sistema SDMO - Página Principal</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Tu configuración centralizada (URL y ANON) -->
+  <script src="public/config.js"></script>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background: #0f1419;
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
+      background: #0f1419; color: #ffffff; min-height: 100vh;
+      display: flex; flex-direction: column; overflow-x: hidden;
     }
-    
-    /* Gradiente de fondo animado */
     body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
+      content: ''; position: fixed; inset: 0;
+      background:
         radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
-      z-index: -1;
-      animation: gradientShift 20s ease infinite;
+      z-index: -1; animation: gradientShift 20s ease infinite;
     }
-    
-    @keyframes gradientShift {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.8; }
-    }
-    
-    /* Header moderno */
+    @keyframes gradientShift { 0%,100%{opacity:1} 50%{opacity:.8} }
+
     .main-header {
-      background: rgba(15, 20, 25, 0.95);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 1.5rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      background: rgba(15,20,25,.95); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      padding: 1.5rem 0; position: sticky; top: 0; z-index: 100;
     }
-    
     .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1400px; margin: 0 auto; padding: 0 2rem;
     }
-    
-    .header-left {
-      display: flex;
-      align-items: center;
-    }
-    
+    .header-left { display: flex; align-items: center; }
     .header-logo {
-      width: 40px;
-      height: 40px;
-      margin-right: 1rem;
-      padding: 8px;
-      background: linear-gradient(135deg, #06b6d4, #3b82f6);
-      border-radius: 12px;
-      filter: drop-shadow(0 4px 12px rgba(6, 182, 212, 0.3));
-      animation: pulse 2s infinite ease-in-out;
+      width: 40px; height: 40px; margin-right: 1rem; padding: 8px;
+      background: linear-gradient(135deg,#06b6d4,#3b82f6); border-radius: 12px;
+      filter: drop-shadow(0 4px 12px rgba(6,182,212,.3)); animation: pulse 2s infinite ease-in-out;
     }
-    
     @keyframes pulse {
-      0% { transform: scale(1); filter: drop-shadow(0 4px 12px rgba(6, 182, 212, 0.3)); }
-      50% { transform: scale(1.05); filter: drop-shadow(0 8px 16px rgba(6, 182, 212, 0.4)); }
-      100% { transform: scale(1); filter: drop-shadow(0 4px 12px rgba(6, 182, 212, 0.3)); }
+      0%{transform:scale(1); filter:drop-shadow(0 4px 12px rgba(6,182,212,.3))}
+      50%{transform:scale(1.05); filter:drop-shadow(0 8px 16px rgba(6,182,212,.4))}
+      100%{transform:scale(1); filter:drop-shadow(0 4px 12px rgba(6,182,212,.3))}
     }
-    
     .header-title {
-      font-weight: 700;
-      font-size: 1.5rem;
-      margin: 0;
-      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-weight: 700; font-size: 1.5rem; margin: 0;
+      background: linear-gradient(135deg,#fff 0%,#cbd5e1 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    
-    .header-subtitle {
-      opacity: 0.7;
-      font-size: 0.875rem;
-      margin: 0;
-      color: #94a3b8;
-      font-weight: 400;
-    }
-    
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    
+    .header-subtitle { opacity:.7; font-size:.875rem; margin:0; color:#94a3b8; font-weight:400; }
+    .header-right { display:flex; align-items:center; gap:1rem; }
     .user-avatar {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #06b6d4, #3b82f6);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 0.875rem;
-      color: white;
-    }
-    
-    /* Contenedor principal */
-    .main-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 3rem 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-      width: 100%;
-    }
-    
-    /* Tarjeta de bienvenida */
-    .user-card {
-      background: rgba(30, 41, 59, 0.4);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 2rem;
-      margin-bottom: 3rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .user-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.5), transparent);
-    }
-    
-    .user-welcome {
-      font-size: 1rem;
-      margin: 0 0 0.5rem 0;
-      color: #94a3b8;
-      opacity: 0.8;
-    }
-    
-    .user-email {
-      color: #06b6d4;
-      font-weight: 600;
-      font-size: 1.25rem;
-      margin: 0;
-      text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-    }
-    
-    /* Área de contenido */
-    .content-area {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    /* Grid de módulos */
-    .menu-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-    
-    .menu-card {
-      background: rgba(30, 41, 59, 0.4);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 2rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .menu-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-      transition: left 0.6s;
-    }
-    
-    .menu-card:hover::before {
-      left: 100%;
-    }
-    
-    .menu-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(6, 182, 212, 0.3);
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(6, 182, 212, 0.1),
-        0 0 40px rgba(6, 182, 212, 0.1);
-    }
-    
-    .card-body {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .card-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.75rem;
-      margin-bottom: 1.5rem;
-      transition: all 0.3s ease;
-    }
-    
-    .menu-card:nth-child(1) .card-icon {
-      background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
-      color: #06b6d4;
-      border: 1px solid rgba(6, 182, 212, 0.2);
-    }
-    
-    .menu-card:nth-child(2) .card-icon {
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
-      color: #8b5cf6;
-      border: 1px solid rgba(139, 92, 246, 0.2);
-    }
-    
-    .menu-card:nth-child(3) .card-icon {
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
-      color: #22c55e;
-      border: 1px solid rgba(34, 197, 94, 0.2);
-    }
-    
-    .menu-card:nth-child(4) .card-icon {
-      background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(245, 101, 101, 0.2) 100%);
-      color: #f97316;
-      border: 1px solid rgba(249, 115, 22, 0.2);
-    }
-    
-    .menu-card:nth-child(5) .card-icon {
-      background: linear-gradient(135deg, rgba(236, 72, 153, 0.2) 0%, rgba(219, 39, 119, 0.2) 100%);
-      color: #ec4899;
-      border: 1px solid rgba(236, 72, 153, 0.2);
-    }
-    
-    /* Tarjeta 6: Gestión de Activos */
-   .menu-card:nth-child(6) .card-icon {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.20) 0%, rgba(251, 191, 36, 0.20) 100%);
-      color: #f59e0b; /* amber */
-      border: 1px solid rgba(245, 158, 11, 0.25);
+      width:36px; height:36px; background:linear-gradient(135deg,#06b6d4,#3b82f6);
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-weight:600; font-size:.875rem; color:#fff;
     }
 
-    .menu-card:hover .card-icon {
-      transform: scale(1.1);
-      box-shadow: 0 8px 24px rgba(6, 182, 212, 0.2);
+    .main-container { flex:1; display:flex; flex-direction:column; padding:3rem 2rem; max-width:1400px; margin:0 auto; width:100%; }
+    .user-card {
+      background: rgba(30,41,59,.4); backdrop-filter: blur(20px);
+      border:1px solid rgba(255,255,255,.1); border-radius:24px;
+      padding:2rem; margin-bottom:3rem; text-align:center; position:relative; overflow:hidden;
     }
-    
-    .card-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-      color: #ffffff;
+    .user-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(6,182,212,.5),transparent); }
+    .user-welcome { font-size:1rem; margin:0 0 .5rem 0; color:#94a3b8; opacity:.8; }
+    .user-email { color:#06b6d4; font-weight:600; font-size:1.25rem; margin:0; text-shadow:0 0 10px rgba(6,182,212,.3); }
+
+    .content-area { flex:1; display:flex; flex-direction:column; }
+    .menu-options { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; margin-bottom:3rem; }
+    .menu-card {
+      background: rgba(30,41,59,.4); backdrop-filter: blur(20px);
+      border:1px solid rgba(255,255,255,.1); border-radius:24px; padding:2rem;
+      transition: all .3s cubic-bezier(.4,0,.2,1); position:relative; overflow:hidden; cursor:pointer; display:flex; flex-direction:column;
     }
-    
-    .card-description {
-      color: #94a3b8;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-      flex-grow: 1;
+    .menu-card::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent); transition:left .6s; }
+    .menu-card:hover::before{ left:100%; }
+    .menu-card:hover{ transform:translateY(-8px); border-color:rgba(6,182,212,.3); box-shadow:0 20px 40px rgba(0,0,0,.3), 0 0 0 1px rgba(6,182,212,.1), 0 0 40px rgba(6,182,212,.1); }
+    .card-body { display:flex; flex-direction:column; flex:1; position:relative; z-index:1; }
+    .card-icon { width:64px; height:64px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.75rem; margin-bottom:1.5rem; transition:all .3s ease; }
+    .menu-card:nth-child(1) .card-icon { background:linear-gradient(135deg,rgba(6,182,212,.2),rgba(59,130,246,.2)); color:#06b6d4; border:1px solid rgba(6,182,212,.2); }
+    .menu-card:nth-child(2) .card-icon { background:linear-gradient(135deg,rgba(139,92,246,.2),rgba(168,85,247,.2)); color:#8b5cf6; border:1px solid rgba(139,92,246,.2); }
+    .menu-card:nth-child(3) .card-icon { background:linear-gradient(135deg,rgba(34,197,94,.2),rgba(16,185,129,.2)); color:#22c55e; border:1px solid rgba(34,197,94,.2); }
+    .menu-card:nth-child(4) .card-icon { background:linear-gradient(135deg,rgba(249,115,22,.2),rgba(245,101,101,.2)); color:#f97316; border:1px solid rgba(249,115,22,.2); }
+    .menu-card:nth-child(5) .card-icon { background:linear-gradient(135deg,rgba(236,72,153,.2),rgba(219,39,119,.2)); color:#ec4899; border:1px solid rgba(236,72,153,.2); }
+    .menu-card:nth-child(6) .card-icon { background:linear-gradient(135deg,rgba(245,158,11,.20),rgba(251,191,36,.20)); color:#f59e0b; border:1px solid rgba(245,158,11,.25); }
+    .menu-card:hover .card-icon { transform:scale(1.1); box-shadow:0 8px 24px rgba(6,182,212,.2); }
+    .card-title { font-size:1.25rem; font-weight:600; margin-bottom:.75rem; color:#fff; }
+    .card-description { color:#94a3b8; font-size:.95rem; line-height:1.5; margin-bottom:1.5rem; flex-grow:1; }
+    .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.25rem; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:12px; color:#fff; font-weight:500; font-size:.875rem; transition:all .3s ease; text-decoration:none; margin-top:auto; justify-content:center; }
+    .btn:hover { background:rgba(6,182,212,.1); border-color:rgba(6,182,212,.3); color:#06b6d4; transform:translateX(4px); }
+
+    .footer-controls { border-top:1px solid rgba(255,255,255,.05); padding:2rem 0; margin-top:auto; }
+    .footer-content { display:flex; justify-content:space-between; align-items:center; max-width:1400px; margin:0 auto; padding:0 2rem; }
+    .footer-info { color:#64748b; font-size:.875rem; }
+    .logout-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.5rem; background:linear-gradient(135deg,#ef4444 0%, #dc2626 100%); border:none; border-radius:12px; color:#fff; font-weight:500; font-size:.875rem; cursor:pointer; transition:all .3s ease; }
+    .logout-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(239,68,68,.3); }
+
+    #loader { position:fixed; inset:0; background:rgba(15,20,25,.95); backdrop-filter: blur(10px); z-index:9999; display:none; justify-content:center; align-items:center; }
+    .spinner { width:3rem; height:3rem; border:.25rem solid rgba(6,182,212,.2); border-top-color:#06b6d4; border-radius:50%; animation:spin 1s linear infinite; }
+    @keyframes spin { to{ transform:rotate(360deg); } }
+
+    .toast-container { position:fixed; top:20px; right:20px; z-index:1100; }
+    .toast { background:rgba(30,41,59,.95)!important; backdrop-filter: blur(20px); border:1px solid rgba(255,255,255,.1)!important; border-radius:16px!important; color:#fff!important; box-shadow:0 20px 40px rgba(0,0,0,.4)!important; min-width:300px; }
+    .toast.bg-success{ background:linear-gradient(135deg,rgba(34,197,94,.2),rgba(16,185,129,.2))!important; border-color:rgba(34,197,94,.3)!important; }
+    .toast.bg-danger{ background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(220,38,38,.2))!important; border-color:rgba(239,68,68,.3)!important; }
+    .toast.bg-primary{ background:linear-gradient(135deg,rgba(6,182,212,.2),rgba(59,130,246,.2))!important; border-color:rgba(6,182,212,.3)!important; }
+
+    @media (max-width:768px){
+      .main-container{ padding:2rem 1rem; }
+      .header-content{ padding:0 1rem; flex-direction:column; gap:1rem; }
+      .header-right{ order:-1; }
+      .menu-options{ grid-template-columns:1fr; gap:1rem; }
+      .menu-card{ padding:1.5rem; }
+      .footer-content{ flex-direction:column; gap:1rem; text-align:center; padding:0 1rem; }
+      .user-card{ padding:1.5rem; }
     }
-    
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.25rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      color: #ffffff;
-      font-weight: 500;
-      font-size: 0.875rem;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      margin-top: auto;
-      justify-content: center;
-    }
-    
-    .btn:hover {
-      background: rgba(6, 182, 212, 0.1);
-      border-color: rgba(6, 182, 212, 0.3);
-      color: #06b6d4;
-      transform: translateX(4px);
-    }
-    
-    /* Footer */
-    .footer-controls {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 2rem 0;
-      margin-top: auto;
-    }
-    
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-    
-    .footer-info {
-      color: #64748b;
-      font-size: 0.875rem;
-    }
-    
-    .logout-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-weight: 500;
-      font-size: 0.875rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    
-    .logout-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
-    }
-    
-    /* Loading spinner */
-    #loader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(15, 20, 25, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 9999;
-      display: none;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .spinner {
-      width: 3rem;
-      height: 3rem;
-      border: 0.25rem solid rgba(6, 182, 212, 0.2);
-      border-top-color: #06b6d4;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    /* Notificaciones */
-    .toast-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1100;
-    }
-    
-    .toast {
-      background: rgba(30, 41, 59, 0.95) !important;
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      border-radius: 16px !important;
-      color: #ffffff !important;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
-      min-width: 300px;
-    }
-    
-    .toast.bg-success {
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%) !important;
-      border-color: rgba(34, 197, 94, 0.3) !important;
-    }
-    
-    .toast.bg-danger {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.2) 100%) !important;
-      border-color: rgba(239, 68, 68, 0.3) !important;
-    }
-    
-    .toast.bg-primary {
-      background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%) !important;
-      border-color: rgba(6, 182, 212, 0.3) !important;
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-      .main-container {
-        padding: 2rem 1rem;
-      }
-      
-      .header-content {
-        padding: 0 1rem;
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      .header-right {
-        order: -1;
-      }
-      
-      .menu-options {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      
-      .menu-card {
-        padding: 1.5rem;
-      }
-      
-      .footer-content {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-        padding: 0 1rem;
-      }
-      
-      .user-card {
-        padding: 1.5rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .header-title {
-        font-size: 1.25rem;
-      }
-      
-      .card-icon {
-        width: 56px;
-        height: 56px;
-        font-size: 1.5rem;
-      }
+    @media (max-width:480px){
+      .header-title{ font-size:1.25rem; }
+      .card-icon{ width:56px; height:56px; font-size:1.5rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Contenedor de notificaciones -->
+  <!-- Notificaciones -->
   <div id="toastContainer" class="toast-container"></div>
-  
+
   <!-- Loader -->
-  <div id="loader">
-    <div class="spinner"></div>
-  </div>
-  
+  <div id="loader"><div class="spinner"></div></div>
+
   <!-- Encabezado -->
   <header class="main-header">
     <div class="header-content">
       <div class="header-left">
         <svg class="header-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
         </svg>
         <div>
           <h1 class="header-title">Sistema de Gestión SDMO</h1>
@@ -505,360 +152,236 @@
       </div>
     </div>
   </header>
-  
+
   <!-- Contenido principal -->
   <main class="main-container">
-    <!-- Información del usuario -->
     <div class="user-card">
       <p class="user-welcome">Bienvenido, usted ha iniciado sesión como:</p>
-      <h3 class="user-email" id="usuario">dgamboa@msj.go.cr</h3>
+      <h3 class="user-email" id="usuario">usuario@dominio.com</h3>
     </div>
-    
-    <!-- Área de contenido principal -->
+
     <div class="content-area">
-      <!-- Menú de opciones -->
       <div class="menu-options">
-        <!-- Tarjeta de Artículos -->
+        <!-- Ajusta los href según dónde estén tus páginas (raíz o /pages) -->
         <div class="menu-card">
           <div class="card-body">
-            <div class="card-icon">
-              <i class="fas fa-boxes"></i>
-            </div>
+            <div class="card-icon"><i class="fas fa-boxes"></i></div>
             <h3 class="card-title">Gestión de Artículos</h3>
             <p class="card-description">Registro y control de inventario de materiales</p>
-            <a href="articulos.html" class="btn">
-              <i class="fas fa-arrow-right"></i> Acceder
-            </a>
-          </div>
-        </div>
-        
-        <!-- Tarjeta de Cliente Interno -->
-        <div class="menu-card">
-          <div class="card-body">
-            <div class="card-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <h3 class="card-title">Cliente Interno</h3>
-            <p class="card-description">Gestión de solicitudes internas</p>
-            <a href="inicio_ci.html" class="btn">
-              <i class="fas fa-arrow-right"></i> Acceder
-            </a>
-          </div>
-        </div>
-        
-        <!-- Tarjeta de Cliente Externo -->
-        <div class="menu-card">
-          <div class="card-body">
-            <div class="card-icon">
-              <i class="fas fa-building"></i>
-            </div>
-            <h3 class="card-title">Cliente Externo</h3>
-            <p class="card-description">Gestión de clientes externos</p>
-            <a href="inicio_ce.html" class="btn">
-              <i class="fas fa-arrow-right"></i> Acceder
-            </a>
-          </div>
-        </div>
-        
-        <!-- Tarjeta de Otras Solicitudes -->
-        <div class="menu-card">
-          <div class="card-body">
-            <div class="card-icon">
-              <i class="fas fa-clipboard-list"></i>
-            </div>
-            <h3 class="card-title">Otras Solicitudes</h3>
-            <p class="card-description">Solicitudes especiales y casos particulares</p>
-            <a href="otras_solicitudes.html" class="btn">
-              <i class="fas fa-arrow-right"></i> Acceder
-            </a>
+            <a href="articulos.html" class="btn"><i class="fas fa-arrow-right"></i> Acceder</a>
           </div>
         </div>
 
-        <!-- Nueva tarjeta de Gestión Interna -->
         <div class="menu-card">
           <div class="card-body">
-            <div class="card-icon">
-              <i class="fas fa-cogs"></i>
-            </div>
-            <h3 class="card-title">Gestión Interna</h3>
-            <p class="card-description">Administración y configuración del sistema</p>
-            <a href="gestion_interna.html" class="btn">
-              <i class="fas fa-arrow-right"></i> Acceder
-            </a>
+            <div class="card-icon"><i class="fas fa-users"></i></div>
+            <h3 class="card-title">Cliente Interno</h3>
+            <p class="card-description">Gestión de solicitudes internas</p>
+            <a href="inicio_ci.html" class="btn"><i class="fas fa-arrow-right"></i> Acceder</a>
           </div>
         </div>
-        <!-- Tarjeta de Gestión de Activos -->
-<div class="menu-card">
-  <div class="card-body">
-    <div class="card-icon">
-      <i class="fas fa-screwdriver-wrench"></i>
-    </div>
-    <h3 class="card-title">Gestión de Activos</h3>
-    <p class="card-description">Control y seguimiento de activos fijos</p>
-    <a href="gestion_activos.html" class="btn">
-      <i class="fas fa-arrow-right"></i> Acceder
-    </a>
-  </div>
-</div>
+
+        <div class="menu-card">
+          <div class="card-body">
+            <div class="card-icon"><i class="fas fa-building"></i></div>
+            <h3 class="card-title">Cliente Externo</h3>
+            <p class="card-description">Gestión de clientes externos</p>
+            <a href="inicio_ce.html" class="btn"><i class="fas fa-arrow-right"></i> Acceder</a>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="card-body">
+            <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+            <h3 class="card-title">Otras Solicitudes</h3>
+            <p class="card-description">Solicitudes especiales y casos particulares</p>
+            <a href="otras_solicitudes.html" class="btn"><i class="fas fa-arrow-right"></i> Acceder</a>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="card-body">
+            <div class="card-icon"><i class="fas fa-cogs"></i></div>
+            <h3 class="card-title">Gestión Interna</h3>
+            <p class="card-description">Administración y configuración del sistema</p>
+            <a href="gestion_interna.html" class="btn"><i class="fas fa-arrow-right"></i> Acceder</a>
+          </div>
+        </div>
+
+        <div class="menu-card">
+          <div class="card-body">
+            <div class="card-icon"><i class="fas fa-screwdriver-wrench"></i></div>
+            <h3 class="card-title">Gestión de Activos</h3>
+            <p class="card-description">Control y seguimiento de activos fijos</p>
+            <a href="gestion_activos.html" class="btn"><i class="fas fa-arrow-right"></i> Acceder</a>
+          </div>
+        </div>
       </div>
     </div>
   </main>
-  
-  <!-- Footer con controles -->
+
+  <!-- Footer -->
   <footer class="footer-controls">
     <div class="footer-content">
       <p class="footer-info">© 2025 Sistema SDMO - Municipalidad de San José</p>
-      <button id="btnLogout" class="logout-btn">
-        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-      </button>
+      <button id="btnLogout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- Lógica de la página -->
   <script type="module">
+    // Usamos módulos (sin script global). ¡Solo un import!
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    // Crear cliente con tu config centralizada
+    const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.SDMO_CONFIG || {};
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const { SUPABASE_URL, SUPABASE_ANON_KEY } = window.SDMO_CONFIG || {};
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// Guard rápido: si no hay sesión, volver al login
-const { data } = await supabase.auth.getSession();
-if (!data.session) {
-  window.location.href = "index.html";
-  throw new Error("No hay sesión");
-}
-
-    // Variables globales para control de estado
+    // Estado
     let isLoggingOut = false;
     let authCheckInProgress = false;
 
-    // Inicializar la aplicación cuando el DOM esté listo
+    // Guard: si no hay sesión, volver al login
+    (async () => {
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) {
+        window.location.href = "index.html";
+        return;
+      }
+    })();
+
+    // Init
     document.addEventListener('DOMContentLoaded', initApp);
 
-    // Función principal de inicialización
     async function initApp() {
       try {
         if (authCheckInProgress || isLoggingOut) return;
-        
         authCheckInProgress = true;
         showLoading(true);
-        
+
         await checkAuthentication();
         setupEventListeners();
-        // Eliminé la línea que mostraba la notificación de "Sesión iniciada correctamente"
       } catch (error) {
         console.error("Error de inicialización:", error);
         if (!isLoggingOut) {
           showNotification("Error al verificar la sesión", "error");
-          setTimeout(() => {
-            if (!isLoggingOut) {
-              window.location.href = "index.html";
-            }
-          }, 2000);
+          setTimeout(() => { if (!isLoggingOut) window.location.href = "index.html"; }, 2000);
         }
       } finally {
         authCheckInProgress = false;
-        if (!isLoggingOut) {
-          showLoading(false);
-        }
+        if (!isLoggingOut) showLoading(false);
       }
     }
 
-    // Verificar autenticación del usuario
     async function checkAuthentication() {
       if (isLoggingOut) return null;
-      
+
       const { data: { user }, error: authError } = await supabase.auth.getUser();
-      
-      if (authError && !isLoggingOut) {
-        throw authError;
-      }
-      
+      if (authError && !isLoggingOut) throw authError;
+
       if (!user && !isLoggingOut) {
         window.location.href = "index.html";
         throw new Error("No hay usuario autenticado");
       }
 
       if (user && !isLoggingOut) {
-        // Mostrar email del usuario
         const usuarioElement = document.getElementById("usuario");
-        if (usuarioElement) {
-          usuarioElement.textContent = user.email;
-        }
-        
-        // Actualizar avatar con iniciales
+        if (usuarioElement) usuarioElement.textContent = user.email;
+
         const userAvatar = document.getElementById("userAvatar");
         if (userAvatar && user.email) {
           const initials = user.email.split('@')[0].substring(0, 2).toUpperCase();
           userAvatar.textContent = initials;
         }
       }
-      
       return user;
     }
 
-    // Configurar event listeners
     function setupEventListeners() {
-      const logoutBtn = document.getElementById("btnLogout");
-      if (logoutBtn) {
-        logoutBtn.addEventListener("click", logout);
-      }
-      
-      // Hover efecto en tarjetas
+      document.getElementById("btnLogout")?.addEventListener("click", logout);
+
       const cards = document.querySelectorAll('.menu-card');
       cards.forEach(card => {
-        card.addEventListener('mouseenter', (e) => {
-          if (!isLoggingOut) {
-            e.currentTarget.style.transform = 'translateY(-8px)';
-          }
-        });
-        card.addEventListener('mouseleave', (e) => {
-          if (!isLoggingOut) {
-            e.currentTarget.style.transform = 'translateY(0)';
-          }
-        });
+        card.addEventListener('mouseenter', e => { if (!isLoggingOut) e.currentTarget.style.transform = 'translateY(-8px)'; });
+        card.addEventListener('mouseleave', e => { if (!isLoggingOut) e.currentTarget.style.transform = 'translateY(0)'; });
       });
     }
 
-    // Cerrar sesión
     async function logout() {
       if (isLoggingOut) return;
-      
       try {
         isLoggingOut = true;
         showLoading(true);
         showNotification("Cerrando sesión...", "info");
-        
-        // Limpiar cualquier listener de eventos de autenticación
-        supabase.auth.onAuthStateChange(() => {});
-        
+
+        supabase.auth.onAuthStateChange(() => {}); // no-op
         const { error } = await supabase.auth.signOut();
-        if (error && error.message !== 'The user is not authenticated') {
-          throw error;
-        }
-        
-        // Esperar un poco más para asegurar que el logout se complete
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Limpiar cualquier dato de sesión local
-        localStorage.clear();
-        sessionStorage.clear();
-        
-        // Forzar la redirección
-        window.location.replace("index.html");
-        
-      } catch (error) {
-        console.error("Error al cerrar sesión:", error);
-        // En caso de error, forzar la redirección de todas formas
+        if (error && error.message !== 'The user is not authenticated') throw error;
+
+        await new Promise(r => setTimeout(r, 500));
+      } catch (e) {
+        console.error("Error al cerrar sesión:", e);
+      } finally {
         localStorage.clear();
         sessionStorage.clear();
         window.location.replace("index.html");
       }
     }
 
-    // Mostrar notificación
     function showNotification(message, type = "info") {
       if (isLoggingOut && type === "error") return;
-      
       const toast = createToastElement(message, type);
       const toastContainer = document.getElementById('toastContainer');
-      if (toastContainer) {
-        toastContainer.appendChild(toast);
-        
-        // Simular Bootstrap Toast
-        toast.style.display = 'block';
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100%)';
-        
-        setTimeout(() => {
-          toast.style.transition = 'all 0.3s ease';
-          toast.style.opacity = '1';
-          toast.style.transform = 'translateX(0)';
-        }, 100);
-        
-        // Auto-hide después de 3 segundos
-        setTimeout(() => {
-          if (toast.parentNode) {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-              if (toast.parentNode) {
-                toast.remove();
-              }
-            }, 300);
-          }
-        }, 3000);
-      }
+      if (!toastContainer) return;
+
+      toastContainer.appendChild(toast);
+      toast.style.display = 'block'; toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)';
+      setTimeout(() => { toast.style.transition='all .3s ease'; toast.style.opacity='1'; toast.style.transform='translateX(0)'; }, 100);
+      setTimeout(() => {
+        if (!toast.parentNode) return;
+        toast.style.opacity='0'; toast.style.transform='translateX(100%)';
+        setTimeout(() => { if (toast.parentNode) toast.remove(); }, 300);
+      }, 3000);
     }
-    
-    // Crear elemento toast
+
     function createToastElement(message, type) {
-      const notification = document.createElement("div");
-      notification.className = `toast bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'primary'}`;
-      
-      const iconClass = type === 'success' ? 'fa-check-circle' : 
-                        type === 'error' ? 'fa-exclamation-triangle' : 'fa-info-circle';
-      
-      notification.innerHTML = `
-        <div style="display: flex; align-items: center; padding: 1rem;">
-          <div style="flex: 1;">
-            <i class="fas ${iconClass}" style="margin-right: 0.5rem;"></i>
-            ${message}
+      const n = document.createElement("div");
+      n.className = `toast bg-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'primary'}`;
+      const iconClass = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-triangle' : 'fa-info-circle';
+      n.innerHTML = `
+        <div style="display:flex; align-items:center; padding:1rem;">
+          <div style="flex:1;">
+            <i class="fas ${iconClass}" style="margin-right:.5rem;"></i>${message}
           </div>
-          <button type="button" style="background: none; border: none; color: inherit; margin-left: 1rem; cursor: pointer;" onclick="this.parentElement.parentElement.remove()">
+          <button type="button" style="background:none; border:none; color:inherit; margin-left:1rem; cursor:pointer;" onclick="this.parentElement.parentElement.remove()">
             <i class="fas fa-times"></i>
           </button>
-        </div>
-      `;
-      
-      return notification;
+        </div>`;
+      return n;
     }
 
-    // Mostrar/ocultar loading
     function showLoading(show) {
       const loader = document.getElementById("loader");
-      if (loader) {
-        loader.style.display = show ? "flex" : "none";
-      }
+      if (loader) loader.style.display = show ? "flex" : "none";
     }
 
-    // Manejar cambios en el estado de autenticación
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT' && !isLoggingOut) {
-        // Solo redirigir si no estamos en proceso de cerrar sesión
-        window.location.href = "index.html";
-      }
+    supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT' && !isLoggingOut) window.location.href = "index.html";
     });
 
-    // Manejar visibilidad de la página para evitar verificaciones innecesarias
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden || isLoggingOut) {
-        return;
-      }
-      
-      // Verificar autenticación solo si la página se vuelve visible
-      // y no estamos en proceso de logout
+      if (document.hidden || isLoggingOut) return;
       setTimeout(async () => {
         if (!document.hidden && !isLoggingOut && !authCheckInProgress) {
-          try {
-            await checkAuthentication();
-          } catch (error) {
-            console.error("Error en verificación de visibilidad:", error);
-            if (!isLoggingOut) {
-              window.location.href = "index.html";
-            }
-          }
+          try { await checkAuthentication(); }
+          catch (e) { console.error("Error en verificación de visibilidad:", e); if (!isLoggingOut) window.location.href = "index.html"; }
         }
       }, 1000);
     });
 
-    // Prevenir errores de conexión durante el logout
-    window.addEventListener('beforeunload', () => {
-      isLoggingOut = true;
-    });
+    window.addEventListener('beforeunload', () => { isLoggingOut = true; });
   </script>
 </body>
 </html>
+
 
